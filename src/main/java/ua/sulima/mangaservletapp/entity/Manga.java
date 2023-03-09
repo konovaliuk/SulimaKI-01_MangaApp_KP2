@@ -5,17 +5,17 @@ import java.sql.Timestamp;
 
 public class Manga {
 
-    private long id;
+    private Long id;
 
     private String mangaName;
 
-    private int authorId;
+    private Integer authorId;
 
-    private int artistId;
+    private Integer artistId;
 
-    private short releaseYear;
+    private Short releaseYear;
 
-    private int translatorId;
+    private Integer translatorId;
 
     private String alternativeMangaName;
 
@@ -27,6 +27,6 @@ public class Manga {
 
     private String previewImagePath;
 
-    private boolean isApproved;
+    private Boolean isApproved;
 
 }

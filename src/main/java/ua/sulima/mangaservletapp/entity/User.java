@@ -4,11 +4,12 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data @Builder
 public class User {
 
-    private long id;
+    private Long id;
 
     private String nickname;
 
@@ -19,5 +20,7 @@ public class User {
     private Byte[] image;
 
     private Timestamp updated;
+
+    private List<Role> roles;
 
 }
