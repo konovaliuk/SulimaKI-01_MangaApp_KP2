@@ -1,11 +1,15 @@
 package ua.sulima.mangaservletapp.entity;
 
+import lombok.Builder;
+import lombok.Data;
+
 import java.sql.Time;
 import java.sql.Timestamp;
 
+@Data @Builder
 public class Manga {
 
-    private Long id;
+    private Integer id;
 
     private String mangaName;
 
@@ -15,7 +19,7 @@ public class Manga {
 
     private Short releaseYear;
 
-    private Integer translatorId;
+    private Long translatorId;
 
     private String alternativeMangaName;
 

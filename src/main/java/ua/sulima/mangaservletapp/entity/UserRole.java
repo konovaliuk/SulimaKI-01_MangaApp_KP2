@@ -1,11 +1,12 @@
 package ua.sulima.mangaservletapp.entity;
 
+import lombok.Builder;
 import lombok.Data;
 
-@Data
+@Data @Builder
 public class UserRole {
 
-    private Integer userId;
+    private Long userId;
 
-    private Integer roleId;
+    private Short roleId;
 }
