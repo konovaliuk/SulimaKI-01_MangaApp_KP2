@@ -1,11 +1,12 @@
 package ua.sulima.mangaservletapp.dao.mapper;
 
+import ua.sulima.mangaservletapp.entity.Creator;
 import ua.sulima.mangaservletapp.entity.Manga;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MangaMapper implements FromResultSetMapper {
+public class MangaMapper implements FromResultSetMapper<Manga> {
 
     @Override
     public Manga retrieveFromResultSet(ResultSet resultSet) throws SQLException {

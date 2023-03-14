@@ -5,9 +5,9 @@ import ua.sulima.mangaservletapp.entity.Creator;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CreatorMapper implements FromResultSetMapper {
+public class CreatorMapper implements FromResultSetMapper<Creator> {
     @Override
-    public Object retrieveFromResultSet(ResultSet resultSet) throws SQLException {
+    public Creator retrieveFromResultSet(ResultSet resultSet) throws SQLException {
         return Creator.builder()
                 .id(resultSet.getInt("id"))
                 .name(resultSet.getString("name"))

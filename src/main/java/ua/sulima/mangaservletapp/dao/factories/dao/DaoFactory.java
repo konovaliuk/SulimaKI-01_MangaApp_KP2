@@ -1,5 +1,6 @@
 package ua.sulima.mangaservletapp.dao.factories.dao;
 
+import ua.sulima.mangaservletapp.dao.CreatorDao;
 import ua.sulima.mangaservletapp.dao.MangaDao;
 import ua.sulima.mangaservletapp.dao.UserDao;
 import ua.sulima.mangaservletapp.dao.factories.connection.ConnectionFactory;
@@ -23,4 +24,6 @@ public abstract class DaoFactory {
     public abstract UserDao getUserDao();
 
     public abstract MangaDao getMangaDao();
+
+    public abstract CreatorDao getCreatorDao();
 }
