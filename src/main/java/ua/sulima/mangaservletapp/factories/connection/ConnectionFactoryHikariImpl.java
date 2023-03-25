@@ -1,8 +1,7 @@
-package ua.sulima.mangaservletapp.dao.factories.connection;
+package ua.sulima.mangaservletapp.factories.connection;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;

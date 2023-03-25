@@ -1,4 +1,4 @@
-package ua.sulima.mangaservletapp.dao.factories.connection;
+package ua.sulima.mangaservletapp.factories.connection;
 
 import java.sql.Connection;
 
