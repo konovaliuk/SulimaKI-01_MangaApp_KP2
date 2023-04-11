@@ -1,7 +1,9 @@
 package ua.sulima.mangaservletapp.factories.service;
 
 import ua.sulima.mangaservletapp.factories.dao.DaoFactory;
+import ua.sulima.mangaservletapp.service.CreatorService;
 import ua.sulima.mangaservletapp.service.MangaService;
+import ua.sulima.mangaservletapp.service.UserService;
 
 public abstract class ServiceFactory {
     private static volatile ServiceFactory serviceFactory;
@@ -20,4 +22,8 @@ public abstract class ServiceFactory {
     }
 
     public abstract MangaService getMangaService();
+
+    public abstract UserService getUserService();
+
+    public abstract CreatorService getCreatorService();
 }
