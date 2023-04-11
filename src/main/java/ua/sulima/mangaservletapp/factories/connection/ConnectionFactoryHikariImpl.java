@@ -18,6 +18,7 @@ class ConnectionFactoryHikariImpl extends ConnectionFactory {
         config.setJdbcUrl( "jdbc:postgresql://localhost:5432/manga_db" );
         config.setUsername( "postgres" );
         config.setPassword( "admin" );
+        config.setDriverClassName("org.postgresql.Driver");
         config.addDataSourceProperty( "cachePrepStmts" , "true" );
         config.addDataSourceProperty( "prepStmtCacheSize" , "250" );
         config.addDataSourceProperty( "prepStmtCacheSqlLimit" , "2048" );
@@ -30,6 +31,7 @@ class ConnectionFactoryHikariImpl extends ConnectionFactory {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
+            log.info("failed to get db connection");
             throw new RuntimeException(e);
         }
     }
