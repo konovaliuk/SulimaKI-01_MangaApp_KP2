@@ -1,5 +1,6 @@
 package ua.sulima.mangaservletapp.dao.jdbc_impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import ua.sulima.mangaservletapp.dao.MangaDao;
 import ua.sulima.mangaservletapp.dao.mapper.MangaMapper;
@@ -11,9 +12,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import static java.rmi.server.LogStream.log;
 
+@Slf4j
 public class MangaDaoJdbcImpl extends ConnectionDaoJdbcImpl implements MangaDao {
 
     public MangaDaoJdbcImpl(Connection connection){
@@ -37,6 +42,7 @@ public class MangaDaoJdbcImpl extends ConnectionDaoJdbcImpl implements MangaDao 
         }
         return Optional.ofNullable(manga);
     }
+
 
     @Override
     public Integer save(Manga mangaToSave) {
@@ -68,5 +74,23 @@ public class MangaDaoJdbcImpl extends ConnectionDaoJdbcImpl implements MangaDao 
             e.printStackTrace();
         }
         return generatedId;
+    }
+
+    @Override
+    public List<Manga> findAll(Integer limit, Integer offset) {
+        Manga manga = null;
+        String statement = "SELECT * FROM mangaapp.manga LIMIT ? OFFSET ?;";
+        List<Manga> mangas = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(statement)) {
+            preparedStatement.setInt(1, limit);
+            preparedStatement.setInt(2, offset);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                mangas.add(new MangaMapper().retrieveFromResultSet(resultSet));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return mangas;
     }
 }

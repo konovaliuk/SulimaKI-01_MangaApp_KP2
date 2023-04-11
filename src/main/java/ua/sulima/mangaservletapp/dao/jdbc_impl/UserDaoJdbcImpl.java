@@ -72,6 +72,8 @@ public class UserDaoJdbcImpl extends ConnectionDaoJdbcImpl implements UserDao {
         return Optional.ofNullable(user);
     }
 
+
+
     @Override
     public Long save(User userToSave) {
         String saveUserStatement =
@@ -124,15 +126,53 @@ public class UserDaoJdbcImpl extends ConnectionDaoJdbcImpl implements UserDao {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return Optional.empty();
-    }
 
-    @Override
-    public void close() throws Exception {
-        try {
-            connection.close();
+        Optional<User> user = Optional.empty();
+        String findUserStatement = "SELECT * FROM mangaapp.users WHERE email = ?;";
+        String findUserRolesStatement = "SELECT r.*\n" +
+                "FROM mangaapp.role r\n" +
+                "JOIN mangaapp.user_role ur\n" +
+                "ON r.id = ur.role_id\n" +
+                "WHERE ur.user_id = ?;";
+        try (PreparedStatement findUserPreparedStatement =
+                     connection.prepareStatement(findUserStatement);
+             PreparedStatement findUserRolesPreparedStatement =
+                     connection.prepareStatement(findUserRolesStatement)) {
+
+            connection.setAutoCommit(false);
+
+            findUserPreparedStatement.setString(1, email);
+            ResultSet resultSet = findUserPreparedStatement.executeQuery();
+            if(resultSet.next()){
+                user = Optional.of(new UserMapper().retrieveFromResultSet(resultSet));
+            }else{
+                return user;
+            }
+            Long userId = user.get().getId();
+
+            findUserRolesPreparedStatement.setLong(1, userId);
+            resultSet = findUserRolesPreparedStatement.executeQuery();
+            List<Role> userRolesList = new ArrayList<>();
+            RoleMapper roleMapper = new RoleMapper();
+            while(resultSet.next()){
+                userRolesList.add(roleMapper.retrieveFromResultSet(resultSet));
+            }
+            user.get().setRoles(userRolesList);
+            connection.commit();
+            connection.setAutoCommit(true);
         } catch (SQLException e) {
             e.printStackTrace();
+            if (connection != null) {
+                try {
+                    log.info("Transaction is being rolled back");
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                } catch (SQLException exception) {
+                    e.printStackTrace();
+                }
+            }
         }
+        return user;
     }
+
 }

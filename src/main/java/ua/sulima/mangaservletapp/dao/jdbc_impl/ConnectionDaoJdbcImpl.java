@@ -13,7 +13,7 @@ public abstract class ConnectionDaoJdbcImpl implements AutoCloseable {
 
     protected final Connection connection;
 
-    public void close() throws Exception {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
